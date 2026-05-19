@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conexao-worker
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: conexao-worker
+
+  template:
+    metadata:
+      labels:
+        app: conexao-worker
+
+    spec:
+      containers:
+      - name: conexao-worker
+
+        image: conexao-solidaria-worker
+
+        imagePullPolicy: Never
+
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: Host=postgres;Port=5432;Database=conexao_solidaria;Username=postgres;Password=postgres
+
+        - name: RabbitMQ__Host
+          value: rabbitmq

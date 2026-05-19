@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conexao-api
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: conexao-api
+
+  template:
+    metadata:
+      labels:
+        app: conexao-api
+
+    spec:
+      containers:
+      - name: conexao-api
+
+        image: conexao-solidaria-api
+
+        imagePullPolicy: Never
+
+        ports:
+        - containerPort: 8080
+
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: Host=postgres;Port=5432;Database=conexao_solidaria;Username=postgres;Password=postgres
+
+        - name: RabbitMQ__Host
+          value: rabbitmq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: conexao-api-service
+
+spec:
+  type: NodePort
+
+  selector:
+    app: conexao-api
+
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30080

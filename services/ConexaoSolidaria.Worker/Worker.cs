@@ -1,23 +1,72 @@
+using System.Text;
+using System.Text.Json;
+using ConexaoSolidaria.Shared.Events;
+using ConexaoSolidaria.Worker.Data;
+using Microsoft.EntityFrameworkCore;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+
 namespace ConexaoSolidaria.Worker;
 
 public class Worker : BackgroundService
 {
-    private readonly ILogger<Worker> _logger;
+    private readonly IServiceScopeFactory _scopeFactory;
 
-    public Worker(ILogger<Worker> logger)
+    public Worker(IServiceScopeFactory scopeFactory)
     {
-        _logger = logger;
+        _scopeFactory = scopeFactory;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        var factory = new ConnectionFactory
         {
-            if (_logger.IsEnabled(LogLevel.Information))
+            HostName = "localhost"
+        };
+
+        var connection = factory.CreateConnection();
+
+        var channel = connection.CreateModel();
+
+        channel.QueueDeclare(
+            queue: "donation-queue",
+            durable: false,
+            exclusive: false,
+            autoDelete: false);
+
+        var consumer = new EventingBasicConsumer(channel);
+
+        consumer.Received += async (model, ea) =>
+        {
+            var body = ea.Body.ToArray();
+
+            var message = Encoding.UTF8.GetString(body);
+
+            var donation =
+                JsonSerializer.Deserialize<DonationReceivedEvent>(message);
+
+            using var scope = _scopeFactory.CreateScope();
+
+            var db =
+                scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            var campaign =
+                await db.Campaigns.FirstOrDefaultAsync(x =>
+                    x.Id == donation!.CampaignId);
+
+            if (campaign != null)
             {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                campaign.TotalRaised += donation.Amount;
+
+                await db.SaveChangesAsync();
             }
-            await Task.Delay(1000, stoppingToken);
-        }
+        };
+
+        channel.BasicConsume(
+            queue: "donation-queue",
+            autoAck: true,
+            consumer: consumer);
+
+        await Task.CompletedTask;
     }
 }

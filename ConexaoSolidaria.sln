@@ -13,6 +13,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{4F52FD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConexaoSolidaria.Shared", "shared\ConexaoSolidaria.Shared\ConexaoSolidaria.Shared.csproj", "{F4FCA7AD-2EE5-447A-8030-4A6715DF4379}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		api-deployment.yaml = api-deployment.yaml
+		grafana-deployment.yaml = grafana-deployment.yaml
+		postgres-deployment.yaml = postgres-deployment.yaml
+		prometheus-deployment.yaml = prometheus-deployment.yaml
+		rabbitmq-deployment.yaml = rabbitmq-deployment.yaml
+		worker-deployment.yaml = worker-deployment.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,5 +77,8 @@ Global
 		{3FC4F8F6-4578-415F-95D9-869634314EFD} = {5854FF58-B8C5-05C6-5BF2-ACE42193F22B}
 		{51A045DC-3956-4B1A-B9EC-2D84B2E2F320} = {5854FF58-B8C5-05C6-5BF2-ACE42193F22B}
 		{F4FCA7AD-2EE5-447A-8030-4A6715DF4379} = {4F52FD11-658E-A102-6CD3-7D7C16FFA15B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E810F169-0414-486F-89C5-7A6C733C84CE}
 	EndGlobalSection
 EndGlobal
