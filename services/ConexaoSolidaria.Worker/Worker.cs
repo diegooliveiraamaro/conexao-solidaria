@@ -43,10 +43,15 @@ public class Worker : BackgroundService
 
             var body = ea.Body.ToArray();
 
-            var message = Encoding.UTF8.GetString(body);
+            var message = Encoding.UTF8.GetString(body);          
 
-            var donation =
-                JsonSerializer.Deserialize<DonationReceivedEvent>(message);
+
+            var donation = JsonSerializer.Deserialize<DonationReceivedEvent>(message);
+
+            if (donation is null)
+            {
+                return;
+            }
 
             using var scope = _scopeFactory.CreateScope();
 
