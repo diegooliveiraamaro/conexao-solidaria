@@ -38,6 +38,9 @@ public class Worker : BackgroundService
 
         consumer.Received += async (model, ea) =>
         {
+            if (ea == null)
+                return;
+
             var body = ea.Body.ToArray();
 
             var message = Encoding.UTF8.GetString(body);
