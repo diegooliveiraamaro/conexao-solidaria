@@ -13,16 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{4F52FD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConexaoSolidaria.Shared", "shared\ConexaoSolidaria.Shared\ConexaoSolidaria.Shared.csproj", "{F4FCA7AD-2EE5-447A-8030-4A6715DF4379}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-	ProjectSection(SolutionItems) = preProject
-		api-deployment.yaml = api-deployment.yaml
-		grafana-deployment.yaml = grafana-deployment.yaml
-		postgres-deployment.yaml = postgres-deployment.yaml
-		prometheus-deployment.yaml = prometheus-deployment.yaml
-		rabbitmq-deployment.yaml = rabbitmq-deployment.yaml
-		worker-deployment.yaml = worker-deployment.yaml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

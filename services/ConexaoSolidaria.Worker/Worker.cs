@@ -19,9 +19,9 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var factory = new ConnectionFactory
+        var factory = new ConnectionFactory()
         {
-            HostName = "localhost"
+            HostName = "rabbitmq"
         };
 
         var connection = factory.CreateConnection();
