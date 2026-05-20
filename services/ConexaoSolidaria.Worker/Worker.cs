@@ -21,7 +21,9 @@ public class Worker : BackgroundService
     {
         var factory = new ConnectionFactory()
         {
-            HostName = "rabbitmq"
+            HostName = "localhost",
+            UserName = "guest",
+            Password = "guest"
         };
 
         var connection = factory.CreateConnection();

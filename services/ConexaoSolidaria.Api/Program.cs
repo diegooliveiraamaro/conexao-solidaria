@@ -10,7 +10,7 @@ using ConexaoSolidaria.Api.Services.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Services
+// Services observabilidade funcionando
 
 builder.Services.AddControllers();
 
