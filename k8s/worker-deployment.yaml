@@ -18,14 +18,5 @@ spec:
     spec:
       containers:
       - name: conexao-worker
-
-        image: conexao-solidaria-worker
-
+        image: conexao-worker:latest
         imagePullPolicy: Never
-
-        env:
-        - name: ConnectionStrings__DefaultConnection
-          value: Host=postgres;Port=5432;Database=conexao_solidaria;Username=postgres;Password=postgres
-
-        - name: RabbitMQ__Host
-          value: rabbitmq
